@@ -1,0 +1,23 @@
+<div class="productos-container">
+    <div class="search-container">
+        <button class="back-btn" routerLink="/">Volver al inicio</button>
+        <input type="text" placeholder="Buscar productos..." />
+        <button class="search-btn">🔍</button>
+        <button class="register-btn" routerLink="/registrar-producto">Registrar</button>
+    </div>
+    <div class="productos-list">
+        <div class="producto-card" *ngFor="let producto of productos">
+            <img [src]="producto.img" alt="Imagen del producto" />
+            <div class="producto-info">
+                <h3>{{producto.nombre}}</h3>
+                <p>{{producto.descripcion}}</p>
+                <p>Precio: ${{producto.precio}}</p>
+                <p>Existencias: {{producto.existencias}}</p>
+            </div>
+            <div class="producto-actions">
+                <button class="edit-btn">Editar</button>
+                <button class="delete-btn">Eliminar</button>
+            </div>
+        </div>
+    </div>
+</div>
