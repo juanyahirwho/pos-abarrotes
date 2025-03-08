@@ -1,0 +1,29 @@
+<div class="reabastecer-container">
+    <!-- Barra de búsqueda -->
+    <div class="search-container">
+        <button class="back-btn" routerLink="/">⬅️ Volver al inicio</button>
+        <input type="text" placeholder="Buscar productos..." />
+        <button class="search-btn">🔍 Buscar</button>
+    </div>
+
+    <!-- Lista de productos -->
+    <div class="productos-list">
+        <!-- Tarjeta de producto -->
+        <div class="producto-card" *ngFor="let producto of productos">
+            <img [src]="producto.img" alt="Imagen del producto" class="producto-img" />
+            <div class="producto-info">
+                <h3>{{producto.nombre}}</h3>
+                <p>{{producto.descripcion}}</p>
+                <p><span class="info-label">Precio:</span> ${{producto.precio_venta}}</p>
+                <p><span class="info-label">Existencias:</span> {{producto.existencias}}</p>
+            </div>
+            <div class="producto-cantidad">
+                <label for="cantidad">Cantidad:</label>
+                <input type="number" #cantidadInput min="{{producto.existencias + 1}}" value="{{producto.existencias + 1}}" />
+            </div>
+            <button class="ingresar-btn" (click)="reabastecerProducto(producto.id, cantidadInput.valueAsNumber, producto.existencias)">
+                📦 Reabastecer
+            </button>
+        </div>
+    </div>
+</div>

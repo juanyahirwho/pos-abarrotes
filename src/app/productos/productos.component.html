@@ -1,23 +1,65 @@
 <div class="productos-container">
+    <!-- Barra de búsqueda y acciones -->
     <div class="search-container">
-        <button class="back-btn" routerLink="/">Volver al inicio</button>
+        <button class="back-btn" routerLink="/">⬅️ Volver al inicio</button>
         <input type="text" placeholder="Buscar productos..." />
-        <button class="search-btn">🔍</button>
-        <button class="register-btn" routerLink="/registrar-producto">Registrar</button>
+        <button class="search-btn">🔍 Buscar</button>
+        <button class="register-btn" routerLink="/registrar-producto">➕ Registrar</button>
     </div>
+
+    <!-- Lista de productos -->
     <div class="productos-list">
         <div class="producto-card" *ngFor="let producto of productos">
-            <img [src]="producto.img" alt="Imagen del producto" />
+            <img [src]="producto.img" alt="Imagen del producto" class="producto-img" />
             <div class="producto-info">
                 <h3>{{producto.nombre}}</h3>
-                <p>{{producto.descripcion}}</p>
-                <p>Precio: ${{producto.precio}}</p>
-                <p>Existencias: {{producto.existencias}}</p>
+                <p><span class="info-label">Categoría:</span> {{producto.categoria}}</p>
+                <p><span class="info-label">Marca:</span> {{producto.marca}}</p>
+                <p><span class="info-label">Precio:</span> ${{producto.precio_venta}}</p>
+                <p><span class="info-label">Existencias:</span> {{producto.existencias}}</p>
             </div>
             <div class="producto-actions">
-                <button class="edit-btn">Editar</button>
-                <button class="delete-btn">Eliminar</button>
+                <button class="edit-btn" (click)="abrirModalEditar(producto)">✏️ Editar</button>
+                <button class="delete-btn" (click)="confirmarEliminar(producto.id)">🗑️ Eliminar</button>
             </div>
+        </div>
+    </div>
+
+    <!-- Modal para editar producto -->
+    <div class="modal" *ngIf="mostrarModalEditar">
+        <div class="modal-content">
+            <span class="close" (click)="cerrarModalEditar()">&times;</span>
+            <h2>✏️ Editar Producto</h2>
+            <form (ngSubmit)="guardarCambios()">
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" [(ngModel)]="productoEditado.nombre" name="nombre" required>
+
+                <label for="categoria">Categoría:</label>
+                <input type="text" id="categoria" [(ngModel)]="productoEditado.categoria" name="categoria" required>
+
+                <label for="marca">Marca:</label>
+                <input type="text" id="marca" [(ngModel)]="productoEditado.marca" name="marca" required>
+
+                <label for="precio_compra">Precio de Compra:</label>
+                <input type="number" id="precio_compra" [(ngModel)]="productoEditado.precio_compra" name="precio_compra" required>
+
+                <label for="precio_venta">Precio de Venta:</label>
+                <input type="number" id="precio_venta" [(ngModel)]="productoEditado.precio_venta" name="precio_venta" required>
+
+                <label for="existencias">Existencias:</label>
+                <input type="number" id="existencias" [(ngModel)]="productoEditado.existencias" name="existencias" required>
+
+                <button type="submit">💾 Guardar Cambios</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Alerta de confirmación para eliminar -->
+    <div class="alert" *ngIf="mostrarAlertaEliminar">
+        <div class="alert-content">
+            <p>¿Estás seguro de eliminar este producto?</p>
+            <button class="confirm-btn" (click)="eliminarProducto()">✅ Confirmar</button>
+            <button class="cancel-btn" (click)="cancelarEliminar()">❌ Cancelar</button>
         </div>
     </div>
 </div>

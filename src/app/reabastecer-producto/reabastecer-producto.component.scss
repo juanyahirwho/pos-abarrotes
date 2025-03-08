@@ -1,0 +1,155 @@
+// Variables de colores
+$background-color: #f5f6fa;
+$primary-color: #373d71;
+$secondary-color: #2D336B;
+$accent-color: #7886C7;
+$hover-color: rgba(255, 255, 255, 0.1);
+$box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+$transition-speed: 0.3s;
+
+.reabastecer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: $box-shadow;
+    margin-top: 30px;
+
+    .search-container {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 20px;
+
+        input {
+            flex: 1;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            outline: none;
+            transition: border-color $transition-speed ease;
+
+            &:focus {
+                border-color: $accent-color;
+            }
+        }
+
+        .search-btn {
+            padding: 10px 15px;
+            background-color: $primary-color;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color $transition-speed ease;
+
+            &:hover {
+                background-color: $secondary-color;
+            }
+        }
+
+        .back-btn {
+            background-color: white;
+            color: $primary-color;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all $transition-speed ease;
+
+            &:hover {
+                background-color: $primary-color;
+                color: white;
+            }
+        }
+    }
+
+    .productos-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+    }
+
+    .producto-card {
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: $box-shadow;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        transition: transform $transition-speed ease;
+
+        &:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .producto-img {
+            width: 100%;
+            height: 150px;
+            border-radius: 10px;
+            object-fit: cover;
+        }
+
+        .producto-info {
+            h3 {
+                margin: 0;
+                font-size: 1.2em;
+                color: $primary-color;
+            }
+
+            p {
+                margin: 0;
+                font-size: 0.9em;
+                color: #555;
+
+                .info-label {
+                    font-weight: 500;
+                    color: #333;
+                }
+            }
+        }
+
+        .producto-cantidad {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            label {
+                font-size: 16px;
+                color: $primary-color;
+            }
+
+            input {
+                padding: 8px;
+                font-size: 16px;
+                border: 1px solid #ccc;
+                border-radius: 8px;
+                width: 80px;
+                text-align: center;
+                transition: border-color $transition-speed ease;
+
+                &:focus {
+                    border-color: $accent-color;
+                }
+            }
+        }
+
+        .ingresar-btn {
+            padding: 10px;
+            background-color: $accent-color;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color $transition-speed ease;
+
+            &:hover {
+                background-color: darken($accent-color, 10%);
+            }
+        }
+    }
+}

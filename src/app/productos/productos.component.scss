@@ -1,16 +1,23 @@
+// Variables de colores
+$background-color: #f5f6fa;
+$primary-color: #373d71;
+$secondary-color: #2D336B;
+$accent-color: #7886C7;
+$hover-color: rgba(255, 255, 255, 0.1);
+$box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+$transition-speed: 0.3s;
+
 .productos-container {
     padding: 20px;
-    margin: 0 auto;
-    background-color: #FFF2F2;
-    height: 100vh;
-    width: 100vw;
-    overflow-y: auto; /* Permite el desplazamiento vertical si el contenido es muy largo */
+    background-color: $background-color;
+    min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .search-container {
     display: flex;
-    justify-content: center; /* Centra los elementos horizontalmente */
-    align-items: center; /* Centra los elementos verticalmente */
+    justify-content: center;
+    align-items: center;
     gap: 10px;
     margin-bottom: 20px;
 
@@ -19,93 +26,234 @@
         outline: none;
         padding: 10px;
         font-size: 16px;
-        width: 400px; /* Ancho de la barra de búsqueda */
+        width: 400px;
         border-radius: 8px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        box-shadow: $box-shadow;
+        transition: all $transition-speed ease;
+
+        &:focus {
+            box-shadow: inset 0 0 0 2px $primary-color;
+        }
     }
 
-    .back-btn, .search-btn, .register-btn {
-        background-color: #373d71;
+    .search-btn, .register-btn {
+        background-color: $primary-color;
         color: white;
         border: none;
         padding: 10px 15px;
         border-radius: 8px;
         cursor: pointer;
-        transition: background-color 0.3s;
+        transition: background-color $transition-speed ease;
 
         &:hover {
-            background-color: #2D336B;
+            background-color: $secondary-color;
+        }
+    }
+
+    .back-btn {
+        background-color: white;
+        color: $primary-color;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all $transition-speed ease;
+
+        &:hover {
+            background-color: $primary-color;
+            color: white;
         }
     }
 }
 
 .productos-list {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 3 tarjetas por fila */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 20px;
-    padding: 20px; /* Espaciado interno para el contenedor de tarjetas */
+    padding: 20px;
 }
 
 .producto-card {
     background-color: white;
-    padding: 20px; /* Más espacio interno */
+    padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s;
+    box-shadow: $box-shadow;
+    transition: transform $transition-speed ease;
     cursor: pointer;
-    display: flex; /* Para alinear la imagen y el contenido */
-    gap: 15px; /* Espacio entre la imagen y el contenido */
-    position: relative; /* Necesario para posicionar los botones de acciones */
-    min-height: 200px; /* Altura mínima para las tarjetas */
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 
     &:hover {
-        transform: scale(1.05);
+        transform: translateY(-5px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
     }
 
-    img {
-        width: 120px; /* Ancho fijo para la imagen */
-        height: 120px; /* Alto fijo para la imagen */
+    .producto-img {
+        width: 100%;
+        height: 150px;
         border-radius: 10px;
-        object-fit: cover; /* Ajusta la imagen sin deformarla */
+        object-fit: cover;
     }
 
     .producto-info {
-        flex: 1; /* Ocupa el espacio restante */
-        display: flex;
-        flex-direction: column;
-        gap: 10px; /* Más espacio entre los elementos de información */
-
         h3 {
             margin: 0;
             font-size: 1.2em;
+            color: $primary-color;
         }
 
         p {
             margin: 0;
             font-size: 0.9em;
             color: #555;
+
+            .info-label {
+                font-weight: 500;
+                color: #333;
+            }
         }
     }
 
     .producto-actions {
-        position: absolute; /* Posiciona los botones en la esquina inferior derecha */
-        bottom: 20px; /* Distancia desde la parte inferior */
-        right: 20px; /* Distancia desde la parte derecha */
         display: flex;
         gap: 10px;
+        margin-top: auto;
 
         .edit-btn, .delete-btn {
-            padding: 6px 12px; /* Tamaño más pequeño */
-            background-color: #7C8DE0;
+            padding: 8px 12px;
+            background-color: $accent-color;
             color: white;
             border: none;
             border-radius: 8px;
             cursor: pointer;
-            transition: background-color 0.3s;
-            font-size: 0.8em; /* Tamaño de fuente más pequeño */
+            transition: background-color $transition-speed ease;
 
             &:hover {
-                background-color: #7886C7;
+                background-color: darken($accent-color, 10%);
+            }
+        }
+
+        .delete-btn {
+            background-color: #ff6b6b;
+
+            &:hover {
+                background-color: darken(#ff6b6b, 10%);
+            }
+        }
+    }
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .modal-content {
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        width: 400px;
+        box-shadow: $box-shadow;
+
+        .close {
+            float: right;
+            cursor: pointer;
+            font-size: 24px;
+            color: #555;
+        }
+
+        h2 {
+            margin-top: 0;
+            color: $primary-color;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+
+            label {
+                font-weight: 500;
+                color: #333;
+            }
+
+            input {
+                padding: 8px;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                font-size: 14px;
+            }
+
+            button {
+                background-color: $primary-color;
+                color: white;
+                border: none;
+                padding: 10px;
+                border-radius: 8px;
+                cursor: pointer;
+                transition: background-color $transition-speed ease;
+
+                &:hover {
+                    background-color: $secondary-color;
+                }
+            }
+        }
+    }
+}
+
+.alert {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .alert-content {
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        width: 300px;
+        text-align: center;
+        box-shadow: $box-shadow;
+
+        p {
+            margin: 0 0 20px;
+        }
+
+        button {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color $transition-speed ease;
+
+            &.confirm-btn {
+                background-color: #ff6b6b;
+                color: white;
+
+                &:hover {
+                    background-color: darken(#ff6b6b, 10%);
+                }
+            }
+
+            &.cancel-btn {
+                background-color: #ddd;
+                color: #333;
+
+                &:hover {
+                    background-color: darken(#ddd, 10%);
+                }
             }
         }
     }

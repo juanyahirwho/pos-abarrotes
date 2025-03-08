@@ -1,0 +1,126 @@
+.ventas-container {
+    padding: 20px;
+    margin: 0 auto;
+    background-color: #FFF2F2;
+    height: 100vh;
+    width: 100vw;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    h2 {
+        color: #373d71;
+        margin-bottom: 20px;
+    }
+}
+
+.search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+
+    .back-btn {
+        background-color: white;
+        color: #373d71;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+
+        &:hover {
+            background-color: #2D336B;
+            color: white;
+        }
+    }
+}
+
+.ventas-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 20px;
+    width: 90%;
+    padding: 20px;
+}
+
+.venta-card {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    position: relative;
+
+    &:hover {
+        transform: scale(1.05);
+    }
+
+    .venta-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        h3 {
+            margin: 0;
+            color: #373d71;
+        }
+
+        .fecha {
+            font-size: 0.9em;
+            color: #555;
+        }
+    }
+}
+
+.productos-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px 0;
+}
+
+.producto-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background-color: #f9f9f9;
+    padding: 10px;
+    border-radius: 8px;
+
+    .producto-img {
+        width: 80px;
+        height: 80px;
+        border-radius: 8px;
+        object-fit: cover;
+    }
+
+    .producto-info {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+
+        .nombre {
+            font-weight: bold;
+            color: #373d71;
+        }
+
+        .cantidad, .precio, .subtotal {
+            font-size: 0.9em;
+            color: #555;
+        }
+    }
+}
+
+.venta-total {
+    text-align: right;
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #373d71;
+}

@@ -1,0 +1,41 @@
+<div class="proveedores-container">
+    <!-- Botón de volver al inicio (parte superior izquierda) -->
+    <div class="top-bar">
+        <button class="back-btn" routerLink="/">⬅️ Volver al inicio</button>
+    </div>
+
+    <h2>Gestión de Proveedores</h2>
+
+    <!-- Formulario de registro de proveedores -->
+    <div class="registro-container">
+        <h3>➕ Registrar Nuevo Proveedor</h3>
+        <form class="registro-form">
+            <div class="form-group">
+                <label for="nombre">Nombre del proveedor:</label>
+                <input type="text" id="nombre" name="nombre" placeholder="Ej: Bimbo" required />
+            </div>
+            <div class="form-group">
+                <label for="telefono">Teléfono:</label>
+                <input type="text" id="telefono" name="telefono" placeholder="Ej: 2215789123456" required />
+            </div>
+            <div class="form-group">
+                <button type="submit" class="guardar-btn">💾 Guardar Proveedor</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Lista de proveedores -->
+    <div class="proveedores-list">
+        <h3>📋 Proveedores Registrados</h3>
+        <div class="proveedor-card" *ngFor="let proveedor of proveedores">
+            <div class="proveedor-info">
+                <p class="nombre">{{proveedor.nombre}}</p>
+                <p class="telefono">{{proveedor.telefono}}</p>
+            </div>
+            <div class="proveedor-actions">
+                <button class="edit-btn" (click)="editarProveedor(proveedor)">✏️ Editar</button>
+                <button class="delete-btn" (click)="eliminarProveedor(proveedor)">🗑️ Eliminar</button>
+            </div>
+        </div>
+    </div>
+</div>

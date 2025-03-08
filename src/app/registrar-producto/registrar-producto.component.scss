@@ -1,0 +1,151 @@
+// Variables de colores
+$background-color: #f5f6fa;
+$primary-color: #373d71;
+$secondary-color: #2D336B;
+$accent-color: #7886C7;
+$hover-color: rgba(255, 255, 255, 0.1);
+$box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+$transition-speed: 0.3s;
+
+.registro-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: $box-shadow;
+    margin-top: 30px;
+
+    h2 {
+        text-align: center;
+        color: $primary-color;
+        margin-bottom: 20px;
+        font-size: 28px;
+        font-weight: 600;
+    }
+
+    .registro-form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+
+            label {
+                font-size: 16px;
+                color: $primary-color;
+                font-weight: 500;
+            }
+
+            input {
+                padding: 10px;
+                font-size: 16px;
+                border: 1px solid #ccc;
+                border-radius: 8px;
+                outline: none;
+                transition: border-color $transition-speed ease;
+
+                &:focus {
+                    border-color: $accent-color;
+                    box-shadow: 0 0 5px rgba($accent-color, 0.5);
+                }
+            }
+
+            select {
+                padding: 10px;
+                font-size: 16px;
+                border: 1px solid #ccc;
+                border-radius: 8px;
+                outline: none;
+                appearance: none;
+                background-color: white;
+                background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23373d71' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+                background-repeat: no-repeat;
+                background-position: right 10px center;
+                background-size: 16px;
+                cursor: pointer;
+                transition: border-color $transition-speed ease, box-shadow $transition-speed ease;
+
+                &:focus {
+                    border-color: $accent-color;
+                    box-shadow: 0 0 5px rgba($accent-color, 0.5);
+                }
+
+                &:hover {
+                    background-color: #f9f9f9;
+                }
+            }
+
+            input[type="file"] {
+                padding: 8px;
+                background-color: #f9f9f9;
+                border: 1px dashed #ccc;
+                border-radius: 8px;
+                cursor: pointer;
+                transition: background-color $transition-speed ease;
+
+                &:hover {
+                    background-color: #f0f0f0;
+                }
+            }
+        }
+
+        .guardar-btn {
+            padding: 12px;
+            font-size: 18px;
+            color: white;
+            background-color: $primary-color;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color $transition-speed ease, transform 0.2s ease;
+
+            &:hover {
+                background-color: $secondary-color;
+                transform: scale(1.05);
+            }
+
+            &:active {
+                transform: scale(0.95);
+            }
+        }
+
+        .back-btn {
+            background-color: white;
+            color: $primary-color;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all $transition-speed ease;
+
+            &:hover {
+                background-color: $primary-color;
+                color: white;
+            }
+        }
+    }
+
+    .mensaje {
+        margin-top: 20px;
+        padding: 10px;
+        border-radius: 5px;
+        text-align: center;
+        font-weight: bold;
+
+        &.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        &.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    }
+}

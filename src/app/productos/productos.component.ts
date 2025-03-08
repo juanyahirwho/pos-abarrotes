@@ -1,20 +1,91 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
+import { FormsModule } from '@angular/forms'; // 🟢 IMPORTAR ESTO
 
 @Component({
   selector: 'app-productos',
-  standalone: true, // Indica que es un componente standalone
-  imports: [CommonModule, RouterModule], // Importa CommonModule
+  standalone: true,
+  imports: [CommonModule, RouterModule, HttpClientModule, FormsModule], // 🟢 AÑADIR FormsModule
   templateUrl: './productos.component.html',
   styleUrl: './productos.component.scss'
 })
-export class ProductosComponent {
-  productos = [
-    { nombre: 'Producto 1', descripcion: 'Descripción del Producto 1', precio: 100, existencias: 10, img: 'https://via.placeholder.com/150' },
-    { nombre: 'Producto 2', descripcion: 'Descripción del Producto 2', precio: 200, existencias: 5, img: 'https://via.placeholder.com/150' },
-    { nombre: 'Producto 3', descripcion: 'Descripción del Producto 3', precio: 300, existencias: 8, img: 'https://via.placeholder.com/150' },
-    { nombre: 'Producto 4', descripcion: 'Descripción del Producto 4', precio: 150, existencias: 3, img: 'https://via.placeholder.com/150' },
-    { nombre: 'Producto 5', descripcion: 'Descripción del Producto 5', precio: 250, existencias: 7, img: 'https://via.placeholder.com/150' },
-  ];
+export class ProductosComponent implements OnInit {
+  productos: any[] = [];
+  mostrarModalEditar: boolean = false;
+  mostrarAlertaEliminar: boolean = false;
+  productoEditado: any = {};
+  productoIdAEliminar: number | null = null;
+
+  constructor(private http: HttpClient) {}
+
+  ngOnInit() {
+    this.obtenerProductos();
+  }
+
+  obtenerProductos() {
+    this.http.get<any[]>('http://localhost:3000/api/productos').subscribe(
+      (data) => {
+        this.productos = data.map(producto => ({
+          ...producto,
+          img: producto.foto ? `http://localhost:3000/${producto.foto}` : 'https://via.placeholder.com/150'
+        }));
+      },
+      (error) => {
+        console.error('Error al obtener productos:', error);
+        alert(`Error al obtener productos: ${error.message}`);
+      }
+    );
+  }
+
+  abrirModalEditar(producto: any) {
+    this.productoEditado = { ...producto };
+    this.mostrarModalEditar = true;
+  }
+
+  cerrarModalEditar() {
+    this.mostrarModalEditar = false;
+  }
+
+  guardarCambios() {
+    this.http.put(`http://localhost:3000/api/productos/${this.productoEditado.id}`, this.productoEditado).subscribe(
+      (response) => {
+        this.obtenerProductos(); // Refrescar la lista de productos
+        this.cerrarModalEditar();
+        alert('Producto actualizado exitosamente');
+      },
+      (error) => {
+        console.error('Error al actualizar el producto:', error);
+        alert(`Error al actualizar el producto: ${error.message}`);
+      }
+    );
+  }
+
+  confirmarEliminar(id: number) {
+    this.productoIdAEliminar = id;
+    this.mostrarAlertaEliminar = true;
+  }
+
+  cancelarEliminar() {
+    this.mostrarAlertaEliminar = false;
+    this.productoIdAEliminar = null;
+  }
+
+  eliminarProducto() {
+    if (this.productoIdAEliminar !== null) {
+      this.http.delete(`http://localhost:3000/api/productos/${this.productoIdAEliminar}`).subscribe(
+        (response) => {
+          this.obtenerProductos(); // Refrescar la lista de productos
+          this.mostrarAlertaEliminar = false;
+          alert('Producto eliminado exitosamente');
+        },
+        (error) => {
+          console.error('Error al eliminar el producto:', error);
+          alert(`Error al eliminar el producto: ${error.message}`);
+        }
+      );
+    }
+  }
 }

@@ -1,0 +1,38 @@
+<div class="ventas-container">
+    <h2>Historial de Ventas</h2>
+
+    <!-- Barra de búsqueda -->
+    <div class="search-container">
+        <button class="back-btn" routerLink="/">Volver al inicio</button>
+    </div>
+
+    <!-- Lista de ventas -->
+    <div class="ventas-list">
+        <!-- Tarjeta de venta -->
+        <div class="venta-card" *ngFor="let venta of ventas">
+            <div class="venta-header">
+                <h3>Venta #{{venta.id}}</h3>
+                <p class="fecha">{{venta.fecha | date: 'dd/MM/yyyy HH:mm'}}</p>
+            </div>
+
+            <!-- Lista de productos -->
+            <div class="productos-list">
+                <div class="producto-item" *ngFor="let producto of venta.productos">
+                    <img [src]="producto.img" alt="Imagen del producto" class="producto-img" />
+                    <div class="producto-info">
+                        <p class="nombre">{{producto.nombre}}</p>
+                        <p class="cantidad">Cantidad: {{producto.cantidad}}</p>
+                        <p class="precio">Precio unitario: ${{producto.precio | number: '1.2-2'}}</p>
+                        <p class="subtotal">Subtotal: ${{producto.cantidad * producto.precio | number: '1.2-2'}}</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Total de la venta -->
+            <div class="venta-total">
+                <p>Total de la venta: <strong>${{venta.total | number: '1.2-2'}}</strong></p>
+            </div>
+        </div>
+    </div>
+
+</div>

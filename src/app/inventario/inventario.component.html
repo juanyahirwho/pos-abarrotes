@@ -1,0 +1,49 @@
+<div class="inventario-container">
+    <h2>Inventario de Productos</h2>
+
+    <!-- Barra de búsqueda -->
+    <div class="search-container">
+        <button class="back-btn" routerLink="/">⬅️ Volver al inicio</button>
+        <input type="text" placeholder="Buscar productos..." />
+        <button class="search-btn">🔍</button>
+    </div>
+
+    <!-- Tabla de productos -->
+    <div class="table-container">
+        <table class="productos-table">
+            <thead>
+                <tr>
+                    <th>Imagen</th>
+                    <th>Nombre</th>
+                    <th>Categoría</th>
+                    <th>Marca</th>
+                    <th>Precio de compra</th>
+                    <th>Precio de venta</th>
+                    <th>Existencias</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let producto of productos">
+                    <td><img [src]="producto.img" alt="Imagen del producto" class="producto-img" /></td>
+                    <td>{{producto.nombre}}</td>
+                    <td>{{producto.categoria}}</td>
+                    <td>{{producto.marca}}</td>
+                    <td>${{producto.precio_compra}}</td>
+                    <td>${{producto.precio_venta}}</td>
+                    <td>
+                        <div class="existencias-container">
+                            <div class="existencias-bar" [style.width.%]="(producto.existencias / producto.existencias_maximas) * 100"></div>
+                            <span>{{producto.existencias}}/{{producto.existencias_maximas}}</span>
+                        </div>
+                    </td>
+                    <td>
+                        <span class="estado-badge" [ngClass]="{'bajo-stock': producto.existencias < 3, 'en-stock': producto.existencias >= 3}">
+                            {{producto.existencias < 3 ? 'Bajo Stock' : 'En Stock'}}
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
