@@ -55,8 +55,8 @@ $transition-speed: 0.3s;
 .main-content {
     flex-grow: 1;
     display: flex;
-    justify-content: center;
-    align-items: flex-start;
+    flex-direction: column; // Apila los elementos verticalmente
+    align-items: center; // Centra los elementos horizontalmente
     padding-top: 50px;
 }
 
@@ -69,36 +69,159 @@ $transition-speed: 0.3s;
     border-radius: 15px;
     box-shadow: $search-box-shadow;
     transition: box-shadow $transition-speed ease;
+    width: 80%; // Reducir el ancho de la barra de búsqueda
+    max-width: 500px; // Ancho máximo
 
     &:hover {
         box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
     }
-}
 
-.search-container input {
-    border: none;
-    outline: none;
-    padding: 10px;
-    font-size: 16px;
-    width: 600px;
-    border-radius: 8px;
-    transition: all $transition-speed ease;
+    input {
+        border: none;
+        outline: none;
+        padding: 10px;
+        font-size: 16px;
+        width: 100%; // Ocupa el ancho disponible
+        border-radius: 8px;
+        transition: all $transition-speed ease;
 
-    &:focus {
-        box-shadow: inset 0 0 0 2px $sidebar-color;
+        &:focus {
+            box-shadow: inset 0 0 0 2px $sidebar-color;
+        }
+    }
+
+    .search-btn {
+        background-color: $sidebar-color;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background $transition-speed ease;
+
+        &:hover {
+            background-color: $button-hover-color;
+        }
     }
 }
 
-.search-btn {
-    background-color: $sidebar-color;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background $transition-speed ease;
+// Estilos para los resultados de búsqueda
+.resultados-busqueda {
+    position: absolute; // Posiciona los resultados de búsqueda
+    right: 20px; // Alinea a la derecha
+    top: 100px; // Ajusta la posición vertical
+    width: 300px; // Ancho fijo
+    max-height: 400px; // Altura máxima
+    overflow-y: auto; // Permite el desplazamiento vertical si hay muchos productos
+    background-color: white;
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: $search-box-shadow;
+    z-index: 10; // Asegura que esté por encima de otros elementos
+}
+
+.producto-card {
+    background-color: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: transform $transition-speed ease;
 
     &:hover {
-        background-color: $button-hover-color;
+        transform: translateY(-5px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .producto-img {
+        width: 100%;
+        height: 150px;
+        border-radius: 10px;
+        object-fit: cover;
+    }
+
+    .producto-info {
+        h3 {
+            margin: 0;
+            font-size: 1.2em;
+            color: $sidebar-color;
+        }
+
+        p {
+            margin: 0;
+            font-size: 0.9em;
+            color: #555;
+        }
+    }
+
+    .agregar-btn {
+        padding: 8px;
+        background-color: $sidebar-color;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color $transition-speed ease;
+
+        &:hover {
+            background-color: $button-hover-color;
+        }
+    }
+}
+
+// Estilos para el resumen de la venta
+.resumen-venta {
+    width: 80%; // Reducir el ancho del resumen de la venta
+    max-width: 500px; // Ancho máximo
+    margin-top: 20px; // Espacio entre la barra de búsqueda y el resumen
+    background-color: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: $search-box-shadow;
+
+    h3 {
+        margin-top: 0;
+        color: $sidebar-color;
+        font-size: 1.5em;
+    }
+
+    .lista-productos {
+        margin-bottom: 20px;
+
+        .producto-venta {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+
+            span {
+                font-size: 1em;
+                color: #333;
+            }
+        }
+    }
+
+    .total-venta {
+        text-align: right;
+        font-size: 1.2em;
+        font-weight: bold;
+        color: $sidebar-color;
+    }
+
+    .cobrar-btn {
+        width: 100%;
+        padding: 12px;
+        background-color: $sidebar-color;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color $transition-speed ease;
+
+        &:hover {
+            background-color: $button-hover-color;
+        }
     }
 }

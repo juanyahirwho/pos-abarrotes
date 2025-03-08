@@ -9,6 +9,8 @@ import {
     reabastecerProducto,
     obtenerProductosInvent
 } from '../controllers/productos.controller.js';
+import { registrarVenta, obtenerDetallesVenta } from '../controllers/ventas.controller.js'; // Importar controladores de ventas
+
 const router = express.Router();
 
 // Registrar un nuevo producto
@@ -31,5 +33,11 @@ router.put('/productos/reabastecer/:id', reabastecerProducto);
 
 // Obtener todos los productos para el inventario
 router.get('/productos', obtenerProductosInvent);
+
+// Registrar una nueva venta
+router.post('/ventas', registrarVenta);
+
+// Obtener detalles de una venta por ID
+router.get('/ventas/:id', obtenerDetallesVenta);
 
 export default router;

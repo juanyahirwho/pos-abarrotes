@@ -1,33 +1,62 @@
 <div class="home-container">
-  <!-- Menú lateral con botones -->
-  <aside class="sidebar">
-      <button class="menu-btn" routerLink="/productos">
-          <span class="btn-icon">📦</span>
-          <span class="btn-text">Productos</span>
-      </button>
-      <button class="menu-btn" routerLink="/reabastecer-producto">
-          <span class="btn-icon">🔄</span>
-          <span class="btn-text">Reabastecer</span>
-      </button>
-      <button class="menu-btn" routerLink="/inventario">
-          <span class="btn-icon">📊</span>
-          <span class="btn-text">Inventario</span>
-      </button>
-      <button class="menu-btn" routerLink="/ventas">
-          <span class="btn-icon">💵</span>
-          <span class="btn-text">Ventas</span>
-      </button>
-      <button class="menu-btn" routerLink="/proveedores">
-          <span class="btn-icon">🏭</span>
-          <span class="btn-text">Proveedores</span>
-      </button>
-  </aside>
+    <!-- Menú lateral con botones -->
+    <aside class="sidebar">
+        <button class="menu-btn" routerLink="/productos">
+            <span class="btn-icon">📦</span>
+            <span class="btn-text">Productos</span>
+        </button>
+        <button class="menu-btn" routerLink="/reabastecer-producto">
+            <span class="btn-icon">🔄</span>
+            <span class="btn-text">Reabastecer</span>
+        </button>
+        <button class="menu-btn" routerLink="/inventario">
+            <span class="btn-icon">📊</span>
+            <span class="btn-text">Inventario</span>
+        </button>
+        <button class="menu-btn" routerLink="/ventas">
+            <span class="btn-icon">💵</span>
+            <span class="btn-text">Ventas</span>
+        </button>
+        <button class="menu-btn" routerLink="/proveedores">
+            <span class="btn-icon">🏭</span>
+            <span class="btn-text">Proveedores</span>
+        </button>
+    </aside>
 
-  <!-- Contenido principal -->
-  <main class="main-content">
-      <div class="search-container">
-          <input type="text" placeholder="Buscar productos para iniciar la venta" />
-          <button class="search-btn">🔍</button>
-      </div>
-  </main>
+    <!-- Contenido principal -->
+    <main class="main-content">
+        <!-- Barra de búsqueda -->
+        <div class="search-container">
+            <input type="text" placeholder="Buscar productos para iniciar la venta" [(ngModel)]="terminoBusqueda" (input)="buscarProductos()" />
+            <button class="search-btn">🔍</button>
+        </div>
+
+        <!-- Resultados de búsqueda -->
+        <div class="resultados-busqueda" *ngIf="productosEncontrados.length > 0">
+            <div class="producto-card" *ngFor="let producto of productosEncontrados">
+                <img [src]="producto.foto ? 'http://localhost:3000/' + producto.foto : 'https://via.placeholder.com/150'" alt="Imagen del producto" class="producto-img" />
+                <div class="producto-info">
+                    <h3>{{producto.nombre}}</h3>
+                    <p>Precio: ${{producto.precio_venta}}</p>
+                    <p>Existencias: {{producto.existencias}}</p>
+                </div>
+                <button class="agregar-btn" (click)="agregarProductoAVenta(producto)">➕ Agregar</button>
+            </div>
+        </div>
+
+        <!-- Resumen de la venta -->
+        <div class="resumen-venta" *ngIf="ventaActual.productos.length > 0">
+            <h3>Resumen de la venta</h3>
+            <div class="lista-productos">
+                <div class="producto-venta" *ngFor="let item of ventaActual.productos">
+                    <span>{{item.nombre}} (x{{item.cantidad}})</span>
+                    <span>${{item.subtotal}}</span>
+                </div>
+            </div>
+            <div class="total-venta">
+                <strong>Total a cobrar:</strong> ${{ventaActual.total}}
+            </div>
+            <button class="cobrar-btn" (click)="procesarVenta()">💵 Cobrar</button>
+        </div>
+    </main>
 </div>
