@@ -5,7 +5,8 @@ import {
     actualizarProducto as actualizarProductoService,
     eliminarProducto as eliminarProductoService,
     obtenerProductosInvent as obtenerProductosInventService,
-    actualizarExistenciasService
+    actualizarExistencias as actualizarExistenciasService,
+    buscarProductosPorNombre as buscarProductosPorNombreService
 } from '../services/productos.service.js';
 import multer from 'multer';
 
@@ -50,7 +51,7 @@ export const obtenerProductos = async (req, res) => {
 // Obtener todos los productos para el inventario
 export const obtenerProductosInvent = async (req, res) => {
     try {
-        const productos = await obtenerProductosInvent();
+        const productos = await obtenerProductosInventService();
         res.status(200).json(productos);
     } catch (error) {
         console.error('Error al obtener los productos:', error);
@@ -80,7 +81,6 @@ export const actualizarProducto = async (req, res) => {
     try {
         const { id } = req.params;
         const { nombre, categoria, marca, precio_compra, precio_venta, existencias } = req.body;
-    
 
         const actualizado = await actualizarProductoService(id, nombre, categoria, marca, precio_compra, precio_venta, existencias);
 
@@ -135,6 +135,28 @@ export const reabastecerProducto = async (req, res) => {
     } catch (error) {
         console.error('Error al reabastecer el producto:', error);
         res.status(500).json({ message: 'Error al reabastecer el producto' });
+    }
+};
+
+// Buscar productos por nombre
+export const buscarProductosPorNombre = async (req, res) => {
+    try {
+        const { nombre } = req.query; // Obtener el nombre desde la query string
+        if (!nombre) {
+            return res.status(400).json({ message: 'El parámetro "nombre" es requerido' });
+        }
+
+        const productos = await buscarProductosPorNombreService(nombre);
+
+        // Si no se encuentran productos, devolver un arreglo vacío
+        if (productos.length === 0) {
+            return res.status(200).json([]);
+        }
+
+        res.status(200).json(productos);
+    } catch (error) {
+        console.error('Error al buscar productos por nombre:', error);
+        res.status(500).json({ message: 'Error al buscar productos por nombre' });
     }
 };
 

@@ -1,17 +1,32 @@
-// Variables de colores
+// Variables de colores y fuentes
 $background-color: #f5f6fa;
 $sidebar-color: #373d71;
 $button-hover-color: #2D336B;
-$search-box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+$primary-color: #6C63FF; // Color principal moderno
+$secondary-color: #FF6584; // Color secundario vibrante
+$text-color: #333;
+$white: #ffffff;
+$box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 $transition-speed: 0.3s;
 
+$font-family: 'Poppins', sans-serif; // Fuente moderna
+
+// Estilos generales
 .home-container {
     display: flex;
     height: 100vh;
     background-color: $background-color;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: $font-family;
+    color: $text-color;
 }
 
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+// Sidebar moderno
 .sidebar {
     width: 250px;
     display: flex;
@@ -21,56 +36,77 @@ $transition-speed: 0.3s;
     gap: 15px;
     background-color: $sidebar-color;
     box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 0 20px 20px 0;
+
+    .menu-btn {
+        width: 100%;
+        padding: 15px;
+        font-size: 18px;
+        color: $white;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        background-color: transparent;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        transition: all $transition-speed ease;
+        position: relative;
+
+        &:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateX(10px);
+        }
+
+        &::before {
+            content: '';
+            position: absolute;
+            left: -10px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 5px;
+            height: 0;
+            background-color: $primary-color;
+            border-radius: 5px;
+            transition: height $transition-speed ease;
+        }
+
+        &:hover::before {
+            height: 80%;
+        }
+
+        .btn-icon {
+            font-size: 20px;
+        }
+
+        .btn-text {
+            flex-grow: 1;
+            text-align: left;
+        }
+    }
 }
 
-.menu-btn {
-    width: 100%;
-    padding: 15px;
-    font-size: 18px;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    background-color: transparent;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    transition: all $transition-speed ease;
-
-    &:hover {
-        background-color: rgba(255, 255, 255, 0.1);
-        transform: translateX(10px);
-    }
-
-    .btn-icon {
-        font-size: 20px;
-    }
-
-    .btn-text {
-        flex-grow: 1;
-        text-align: left;
-    }
-}
-
+// Contenido principal
 .main-content {
     flex-grow: 1;
     display: flex;
-    flex-direction: column; // Apila los elementos verticalmente
-    align-items: center; // Centra los elementos horizontalmente
+    flex-direction: column;
+    align-items: center;
     padding-top: 50px;
 }
 
+// Barra de búsqueda moderna
 .search-container {
     display: flex;
     align-items: center;
     gap: 10px;
-    background-color: white;
+    background-color: $white;
     padding: 15px;
     border-radius: 15px;
-    box-shadow: $search-box-shadow;
+    box-shadow: $box-shadow;
     transition: box-shadow $transition-speed ease;
-    width: 80%; // Reducir el ancho de la barra de búsqueda
-    max-width: 500px; // Ancho máximo
+    width: 80%;
+    max-width: 500px;
 
     &:hover {
         box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
@@ -81,18 +117,18 @@ $transition-speed: 0.3s;
         outline: none;
         padding: 10px;
         font-size: 16px;
-        width: 100%; // Ocupa el ancho disponible
+        width: 100%;
         border-radius: 8px;
         transition: all $transition-speed ease;
 
         &:focus {
-            box-shadow: inset 0 0 0 2px $sidebar-color;
+            box-shadow: inset 0 0 0 2px $primary-color;
         }
     }
 
     .search-btn {
-        background-color: $sidebar-color;
-        color: white;
+        background-color: $primary-color;
+        color: $white;
         border: none;
         padding: 10px 15px;
         border-radius: 8px;
@@ -100,86 +136,86 @@ $transition-speed: 0.3s;
         transition: background $transition-speed ease;
 
         &:hover {
-            background-color: $button-hover-color;
+            background-color: darken($primary-color, 10%);
         }
     }
 }
 
-// Estilos para los resultados de búsqueda
+// Resultados de búsqueda animados
 .resultados-busqueda {
-    position: absolute; // Posiciona los resultados de búsqueda
-    right: 20px; // Alinea a la derecha
-    top: 100px; // Ajusta la posición vertical
-    width: 300px; // Ancho fijo
-    max-height: 400px; // Altura máxima
-    overflow-y: auto; // Permite el desplazamiento vertical si hay muchos productos
-    background-color: white;
+    position: absolute;
+    right: 20px;
+    top: 100px;
+    width: 300px;
+    max-height: 400px;
+    overflow-y: auto;
+    background-color: $white;
     padding: 15px;
     border-radius: 15px;
-    box-shadow: $search-box-shadow;
-    z-index: 10; // Asegura que esté por encima de otros elementos
-}
+    box-shadow: $box-shadow;
+    z-index: 10;
 
-.producto-card {
-    background-color: white;
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    transition: transform $transition-speed ease;
-
-    &:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-    }
-
-    .producto-img {
-        width: 100%;
-        height: 150px;
+    .producto-card {
+        background-color: $white;
+        padding: 15px;
         border-radius: 10px;
-        object-fit: cover;
-    }
-
-    .producto-info {
-        h3 {
-            margin: 0;
-            font-size: 1.2em;
-            color: $sidebar-color;
-        }
-
-        p {
-            margin: 0;
-            font-size: 0.9em;
-            color: #555;
-        }
-    }
-
-    .agregar-btn {
-        padding: 8px;
-        background-color: $sidebar-color;
-        color: white;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-        transition: background-color $transition-speed ease;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        transition: transform $transition-speed ease, box-shadow $transition-speed ease;
 
         &:hover {
-            background-color: $button-hover-color;
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .producto-img {
+            width: 100%;
+            height: 150px;
+            border-radius: 10px;
+            object-fit: cover;
+        }
+
+        .producto-info {
+            h3 {
+                margin: 0;
+                font-size: 1.2em;
+                color: $sidebar-color;
+            }
+
+            p {
+                margin: 0;
+                font-size: 0.9em;
+                color: #555;
+            }
+        }
+
+        .agregar-btn {
+            padding: 8px;
+            background-color: $primary-color;
+            color: $white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color $transition-speed ease;
+
+            &:hover {
+                background-color: darken($primary-color, 10%);
+            }
         }
     }
 }
 
-// Estilos para el resumen de la venta
+// Resumen de la venta moderno
 .resumen-venta {
-    width: 80%; // Reducir el ancho del resumen de la venta
-    max-width: 500px; // Ancho máximo
-    margin-top: 20px; // Espacio entre la barra de búsqueda y el resumen
-    background-color: white;
+    width: 80%;
+    max-width: 500px;
+    margin-top: 20px;
+    background-color: $white;
     padding: 20px;
     border-radius: 15px;
-    box-shadow: $search-box-shadow;
+    box-shadow: $box-shadow;
 
     h3 {
         margin-top: 0;
@@ -198,7 +234,7 @@ $transition-speed: 0.3s;
 
             span {
                 font-size: 1em;
-                color: #333;
+                color: $text-color;
             }
         }
     }
@@ -213,15 +249,31 @@ $transition-speed: 0.3s;
     .cobrar-btn {
         width: 100%;
         padding: 12px;
-        background-color: $sidebar-color;
-        color: white;
+        background-color: $primary-color;
+        color: $white;
         border: none;
         border-radius: 8px;
         cursor: pointer;
         transition: background-color $transition-speed ease;
 
         &:hover {
-            background-color: $button-hover-color;
+            background-color: darken($primary-color, 10%);
         }
     }
+}
+
+// Animaciones adicionales
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.resultados-busqueda .producto-card {
+    animation: fadeIn 0.5s ease;
 }

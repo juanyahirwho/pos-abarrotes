@@ -37,7 +37,7 @@ export const eliminarProducto = async (id) => {
 };
 
 // Actualizar existencias de un producto
-export const actualizarExistenciasService = async (id, existencias) => {
+export const actualizarExistencias = async (id, existencias) => {
     const [result] = await pool.query(
         'UPDATE productos SET existencias = ? WHERE id = ?',
         [existencias, id]
@@ -48,4 +48,10 @@ export const actualizarExistenciasService = async (id, existencias) => {
 export const obtenerProductosInvent = async () => {
     const [rows] = await pool.query('SELECT * FROM productos');
     return rows;
+};
+
+// Buscar productos por nombre
+export const buscarProductosPorNombre = async (nombre) => {
+    const [rows] = await pool.query('SELECT * FROM productos WHERE nombre LIKE ?', [`%${nombre}%`]);
+    return rows; // Devuelve un arreglo vacío si no hay coincidencias
 };

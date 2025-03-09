@@ -18,22 +18,22 @@ export class HomeComponent {
   constructor(private http: HttpClient) {}
 
   // Buscar productos
-  buscarProductos() {
+buscarProductos() {
     if (this.terminoBusqueda.trim() === '') {
-      this.productosEncontrados = [];
-      return;
+        this.productosEncontrados = [];
+        return;
     }
 
-    this.http.get<any[]>(`http://localhost:3000/api/productos?nombre=${this.terminoBusqueda}`)
-      .subscribe(
-        (data) => {
-          this.productosEncontrados = data;
-        },
-        (error) => {
-          console.error('Error al buscar productos:', error);
-        }
-      );
-  }
+    this.http.get<any[]>(`http://localhost:3000/api/productos/buscar?nombre=${this.terminoBusqueda}`)
+        .subscribe(
+            (data) => {
+                this.productosEncontrados = data;
+            },
+            (error) => {
+                console.error('Error al buscar productos:', error);
+            }
+        );
+}
 
   // Agregar producto a la venta
   agregarProductoAVenta(producto: any) {
