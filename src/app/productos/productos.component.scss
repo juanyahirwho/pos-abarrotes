@@ -12,6 +12,29 @@ $transition-speed: 0.3s;
     background-color: $background-color;
     min-height: 100vh;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+    h2 {
+        text-align: center;
+        color: $primary-color;
+        margin-bottom: 20px;
+        font-size: 28px;
+        font-weight: 600;
+        position: relative;
+        display: inline-block;
+        width: 100%;
+
+        &::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -10px;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(45deg, $primary-color, $accent-color);
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+    }
 }
 
 .search-container {
@@ -37,16 +60,17 @@ $transition-speed: 0.3s;
     }
 
     .search-btn, .register-btn {
-        background-color: $primary-color;
+        background: linear-gradient(45deg, $primary-color, $accent-color);
         color: white;
         border: none;
         padding: 10px 15px;
         border-radius: 8px;
         cursor: pointer;
-        transition: background-color $transition-speed ease;
+        transition: background $transition-speed ease;
 
         &:hover {
-            background-color: $secondary-color;
+            background: linear-gradient(45deg, darken($primary-color, 10%), darken($accent-color, 10%));
+            transform: translateY(-2px);
         }
     }
 
@@ -58,10 +82,12 @@ $transition-speed: 0.3s;
         border-radius: 8px;
         cursor: pointer;
         transition: all $transition-speed ease;
+        box-shadow: $box-shadow;
 
         &:hover {
-            background-color: $primary-color;
+            background: linear-gradient(45deg, $primary-color, $accent-color);
             color: white;
+            transform: translateY(-2px);
         }
     }
 }
@@ -78,7 +104,7 @@ $transition-speed: 0.3s;
     padding: 20px;
     border-radius: 10px;
     box-shadow: $box-shadow;
-    transition: transform $transition-speed ease;
+    transition: transform $transition-speed ease, box-shadow $transition-speed ease;
     cursor: pointer;
     display: flex;
     flex-direction: column;
@@ -94,6 +120,11 @@ $transition-speed: 0.3s;
         height: 150px;
         border-radius: 10px;
         object-fit: cover;
+        transition: transform $transition-speed ease;
+
+        &:hover {
+            transform: scale(1.05);
+        }
     }
 
     .producto-info {
@@ -122,23 +153,24 @@ $transition-speed: 0.3s;
 
         .edit-btn, .delete-btn {
             padding: 8px 12px;
-            background-color: $accent-color;
+            background: linear-gradient(45deg, $accent-color, lighten($accent-color, 10%));
             color: white;
             border: none;
             border-radius: 8px;
             cursor: pointer;
-            transition: background-color $transition-speed ease;
+            transition: background $transition-speed ease;
 
             &:hover {
-                background-color: darken($accent-color, 10%);
+                background: linear-gradient(45deg, darken($accent-color, 10%), darken(lighten($accent-color, 10%), 10%));
+                transform: translateY(-2px);
             }
         }
 
         .delete-btn {
-            background-color: #ff6b6b;
+            background: linear-gradient(45deg, #ff6b6b, #ff4444);
 
             &:hover {
-                background-color: darken(#ff6b6b, 10%);
+                background: linear-gradient(45deg, darken(#ff6b6b, 10%), darken(#ff4444, 10%));
             }
         }
     }
@@ -161,12 +193,22 @@ $transition-speed: 0.3s;
         border-radius: 10px;
         width: 400px;
         box-shadow: $box-shadow;
+        transition: transform $transition-speed ease;
+
+        &:hover {
+            transform: scale(1.02);
+        }
 
         .close {
             float: right;
             cursor: pointer;
             font-size: 24px;
             color: #555;
+            transition: color $transition-speed ease;
+
+            &:hover {
+                color: $primary-color;
+            }
         }
 
         h2 {
@@ -189,19 +231,25 @@ $transition-speed: 0.3s;
                 border: 1px solid #ddd;
                 border-radius: 8px;
                 font-size: 14px;
+                transition: border-color $transition-speed ease;
+
+                &:focus {
+                    border-color: $primary-color;
+                }
             }
 
             button {
-                background-color: $primary-color;
+                background: linear-gradient(45deg, $primary-color, $accent-color);
                 color: white;
                 border: none;
                 padding: 10px;
                 border-radius: 8px;
                 cursor: pointer;
-                transition: background-color $transition-speed ease;
+                transition: background $transition-speed ease;
 
                 &:hover {
-                    background-color: $secondary-color;
+                    background: linear-gradient(45deg, darken($primary-color, 10%), darken($accent-color, 10%));
+                    transform: translateY(-2px);
                 }
             }
         }
@@ -226,6 +274,11 @@ $transition-speed: 0.3s;
         width: 300px;
         text-align: center;
         box-shadow: $box-shadow;
+        transition: transform $transition-speed ease;
+
+        &:hover {
+            transform: scale(1.02);
+        }
 
         p {
             margin: 0 0 20px;
@@ -239,20 +292,22 @@ $transition-speed: 0.3s;
             transition: background-color $transition-speed ease;
 
             &.confirm-btn {
-                background-color: #ff6b6b;
+                background: linear-gradient(45deg, #ff6b6b, #ff4444);
                 color: white;
 
                 &:hover {
-                    background-color: darken(#ff6b6b, 10%);
+                    background: linear-gradient(45deg, darken(#ff6b6b, 10%), darken(#ff4444, 10%));
+                    transform: translateY(-2px);
                 }
             }
 
             &.cancel-btn {
-                background-color: #ddd;
+                background: linear-gradient(45deg, #ddd, #ccc);
                 color: #333;
 
                 &:hover {
-                    background-color: darken(#ddd, 10%);
+                    background: linear-gradient(45deg, darken(#ddd, 10%), darken(#ccc, 10%));
+                    transform: translateY(-2px);
                 }
             }
         }

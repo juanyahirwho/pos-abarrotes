@@ -15,6 +15,11 @@ $transition-speed: 0.3s;
     border-radius: 10px;
     box-shadow: $box-shadow;
     margin-top: 30px;
+    transition: box-shadow $transition-speed ease;
+
+    &:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
 
     .search-container {
         display: flex;
@@ -29,24 +34,26 @@ $transition-speed: 0.3s;
             border: 1px solid #ccc;
             border-radius: 8px;
             outline: none;
-            transition: border-color $transition-speed ease;
+            transition: border-color $transition-speed ease, box-shadow $transition-speed ease;
 
             &:focus {
                 border-color: $accent-color;
+                box-shadow: 0 0 0 2px rgba($accent-color, 0.2);
             }
         }
 
         .search-btn {
             padding: 10px 15px;
-            background-color: $primary-color;
+            background: linear-gradient(45deg, $primary-color, $accent-color);
             color: white;
             border: none;
             border-radius: 8px;
             cursor: pointer;
-            transition: background-color $transition-speed ease;
+            transition: background $transition-speed ease, transform 0.2s ease;
 
             &:hover {
-                background-color: $secondary-color;
+                background: linear-gradient(45deg, darken($primary-color, 10%), darken($accent-color, 10%));
+                transform: translateY(-2px);
             }
         }
 
@@ -58,10 +65,12 @@ $transition-speed: 0.3s;
             border-radius: 8px;
             cursor: pointer;
             transition: all $transition-speed ease;
+            box-shadow: $box-shadow;
 
             &:hover {
-                background-color: $primary-color;
+                background: linear-gradient(45deg, $primary-color, $accent-color);
                 color: white;
+                transform: translateY(-2px);
             }
         }
     }
@@ -80,7 +89,7 @@ $transition-speed: 0.3s;
         display: flex;
         flex-direction: column;
         gap: 15px;
-        transition: transform $transition-speed ease;
+        transition: transform $transition-speed ease, box-shadow $transition-speed ease;
 
         &:hover {
             transform: translateY(-5px);
@@ -92,6 +101,11 @@ $transition-speed: 0.3s;
             height: 150px;
             border-radius: 10px;
             object-fit: cover;
+            transition: transform $transition-speed ease;
+
+            &:hover {
+                transform: scale(1.05);
+            }
         }
 
         .producto-info {
@@ -130,26 +144,44 @@ $transition-speed: 0.3s;
                 border-radius: 8px;
                 width: 80px;
                 text-align: center;
-                transition: border-color $transition-speed ease;
+                transition: border-color $transition-speed ease, box-shadow $transition-speed ease;
 
                 &:focus {
                     border-color: $accent-color;
+                    box-shadow: 0 0 0 2px rgba($accent-color, 0.2);
                 }
             }
         }
 
         .ingresar-btn {
             padding: 10px;
-            background-color: $accent-color;
+            background: linear-gradient(45deg, $accent-color, lighten($accent-color, 10%));
             color: white;
             border: none;
             border-radius: 8px;
             cursor: pointer;
-            transition: background-color $transition-speed ease;
+            transition: background $transition-speed ease, transform 0.2s ease;
 
             &:hover {
-                background-color: darken($accent-color, 10%);
+                background: linear-gradient(45deg, darken($accent-color, 10%), darken(lighten($accent-color, 10%), 10%));
+                transform: translateY(-2px);
             }
         }
     }
+}
+
+// Animaciones adicionales
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.producto-card {
+    animation: fadeIn 0.5s ease;
 }

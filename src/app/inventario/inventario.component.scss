@@ -19,6 +19,21 @@ $transition-speed: 0.3s;
         margin-bottom: 20px;
         font-size: 28px;
         font-weight: 600;
+        position: relative;
+        display: inline-block;
+        width: 100%;
+
+        &::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -10px;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(45deg, $primary-color, $accent-color);
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
     }
 
     .search-container {
@@ -44,16 +59,17 @@ $transition-speed: 0.3s;
         }
 
         .search-btn {
-            background-color: $primary-color;
+            background: linear-gradient(45deg, $primary-color, $accent-color);
             color: white;
             border: none;
             padding: 10px 15px;
             border-radius: 8px;
             cursor: pointer;
-            transition: background-color $transition-speed ease;
+            transition: background $transition-speed ease;
 
             &:hover {
-                background-color: $secondary-color;
+                background: linear-gradient(45deg, darken($primary-color, 10%), darken($accent-color, 10%));
+                transform: translateY(-2px);
             }
         }
 
@@ -65,10 +81,12 @@ $transition-speed: 0.3s;
             border-radius: 8px;
             cursor: pointer;
             transition: all $transition-speed ease;
+            box-shadow: $box-shadow;
 
             &:hover {
-                background-color: $primary-color;
+                background: linear-gradient(45deg, $primary-color, $accent-color);
                 color: white;
+                transform: translateY(-2px);
             }
         }
     }
@@ -79,6 +97,11 @@ $transition-speed: 0.3s;
         border-radius: 10px;
         box-shadow: $box-shadow;
         padding: 20px;
+        transition: box-shadow $transition-speed ease;
+
+        &:hover {
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
     }
 
     .productos-table {
@@ -92,13 +115,22 @@ $transition-speed: 0.3s;
         }
 
         th {
-            background-color: $primary-color;
+            background: linear-gradient(45deg, $primary-color, $secondary-color);
             color: white;
             font-weight: 500;
+            position: sticky;
+            top: 0;
+            z-index: 1;
         }
 
-        tr:hover {
-            background-color: #f9f9f9;
+        tr {
+            transition: background-color $transition-speed ease;
+
+            &:hover {
+                background-color: #f9f9f9;
+                transform: scale(1.02);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            }
         }
 
         .producto-img {
@@ -106,6 +138,11 @@ $transition-speed: 0.3s;
             height: 50px;
             border-radius: 8px;
             object-fit: cover;
+            transition: transform $transition-speed ease;
+
+            &:hover {
+                transform: scale(1.1);
+            }
         }
 
         .existencias-container {
@@ -115,7 +152,7 @@ $transition-speed: 0.3s;
 
             .existencias-bar {
                 height: 10px;
-                background-color: $accent-color;
+                background: linear-gradient(45deg, $accent-color, lighten($accent-color, 20%));
                 border-radius: 5px;
                 transition: width $transition-speed ease;
             }
@@ -132,16 +169,38 @@ $transition-speed: 0.3s;
             font-size: 12px;
             font-weight: 500;
             text-transform: uppercase;
+            transition: all $transition-speed ease;
 
             &.bajo-stock {
-                background-color: #ffebee;
-                color: #c62828;
+                background: linear-gradient(45deg, #ff4444, #ff6b6b);
+                color: white;
             }
 
             &.en-stock {
-                background-color: #e8f5e9;
-                color: #2e7d32;
+                background: linear-gradient(45deg, #4caf50, #81c784);
+                color: white;
+            }
+
+            &:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             }
         }
     }
+}
+
+// Animaciones adicionales
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.productos-table tr {
+    animation: fadeIn 0.5s ease;
 }

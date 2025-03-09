@@ -15,6 +15,11 @@ $transition-speed: 0.3s;
     border-radius: 10px;
     box-shadow: $box-shadow;
     margin-top: 30px;
+    transition: box-shadow $transition-speed ease;
+
+    &:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
 
     h2 {
         text-align: center;
@@ -22,6 +27,21 @@ $transition-speed: 0.3s;
         margin-bottom: 20px;
         font-size: 28px;
         font-weight: 600;
+        position: relative;
+        display: inline-block;
+        width: 100%;
+
+        &::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -10px;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(45deg, $primary-color, $accent-color);
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
     }
 
     .registro-form {
@@ -46,11 +66,11 @@ $transition-speed: 0.3s;
                 border: 1px solid #ccc;
                 border-radius: 8px;
                 outline: none;
-                transition: border-color $transition-speed ease;
+                transition: border-color $transition-speed ease, box-shadow $transition-speed ease;
 
                 &:focus {
                     border-color: $accent-color;
-                    box-shadow: 0 0 5px rgba($accent-color, 0.5);
+                    box-shadow: 0 0 0 2px rgba($accent-color, 0.2);
                 }
             }
 
@@ -71,7 +91,7 @@ $transition-speed: 0.3s;
 
                 &:focus {
                     border-color: $accent-color;
-                    box-shadow: 0 0 5px rgba($accent-color, 0.5);
+                    box-shadow: 0 0 0 2px rgba($accent-color, 0.2);
                 }
 
                 &:hover {
@@ -97,15 +117,15 @@ $transition-speed: 0.3s;
             padding: 12px;
             font-size: 18px;
             color: white;
-            background-color: $primary-color;
+            background: linear-gradient(45deg, $primary-color, $accent-color);
             border: none;
             border-radius: 8px;
             cursor: pointer;
-            transition: background-color $transition-speed ease, transform 0.2s ease;
+            transition: background $transition-speed ease, transform 0.2s ease;
 
             &:hover {
-                background-color: $secondary-color;
-                transform: scale(1.05);
+                background: linear-gradient(45deg, darken($primary-color, 10%), darken($accent-color, 10%));
+                transform: translateY(-2px);
             }
 
             &:active {
@@ -121,10 +141,12 @@ $transition-speed: 0.3s;
             border-radius: 8px;
             cursor: pointer;
             transition: all $transition-speed ease;
+            box-shadow: $box-shadow;
 
             &:hover {
-                background-color: $primary-color;
+                background: linear-gradient(45deg, $primary-color, $accent-color);
                 color: white;
+                transform: translateY(-2px);
             }
         }
     }
@@ -135,6 +157,7 @@ $transition-speed: 0.3s;
         border-radius: 5px;
         text-align: center;
         font-weight: bold;
+        transition: opacity $transition-speed ease;
 
         &.success {
             background-color: #d4edda;
@@ -147,5 +170,25 @@ $transition-speed: 0.3s;
             color: #721c24;
             border: 1px solid #f5c6cb;
         }
+
+        &:hover {
+            opacity: 0.9;
+        }
     }
+}
+
+// Animaciones adicionales
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.registro-form {
+    animation: fadeIn 0.5s ease;
 }

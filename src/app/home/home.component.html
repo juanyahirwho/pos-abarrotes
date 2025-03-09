@@ -48,9 +48,10 @@
         <div class="resumen-venta" *ngIf="ventaActual.productos.length > 0">
             <h3>Resumen de la venta</h3>
             <div class="lista-productos">
-                <div class="producto-venta" *ngFor="let item of ventaActual.productos">
+                <div class="producto-venta" *ngFor="let item of ventaActual.productos; let i = index">
                     <span>{{item.nombre}} (x{{item.cantidad}})</span>
                     <span>${{item.subtotal}}</span>
+                    <button class="cancelar-btn" (click)="eliminarProductoDeVenta(i)">❌</button>
                 </div>
             </div>
             <div class="total-venta">

@@ -1,110 +1,34 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common'; 
+import { Component, OnInit } from '@angular/core';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 @Component({
-  selector: 'app-ventas',
-  imports: [CommonModule, RouterModule],
-  templateUrl: './ventas.component.html',
-  styleUrl: './ventas.component.scss'
+    selector: 'app-ventas',
+    imports: [CommonModule, RouterModule, HttpClientModule],
+    templateUrl: './ventas.component.html',
+    styleUrls: ['./ventas.component.scss']
 })
-export class VentasComponent {
-  // Datos duros para el historial de ventas
-  ventas = [
-    {
-      id: 1,
-      fecha: new Date('2023-10-01T14:30:00'),
-      productos: [
-        {
-          img: 'https://via.placeholder.com/50',
-          nombre: 'Doritos Incógnita',
-          cantidad: 2,
-          precio: 15.00
-        },
-        {
-          img: 'https://via.placeholder.com/50',
-          nombre: 'Coca Cola 600ml',
-          cantidad: 1,
-          precio: 12.00
-        }
-      ],
-      total: 42.00
-    },
-    {
-      id: 2,
-      fecha: new Date('2023-10-02T10:15:00'),
-      productos: [
-        {
-          img: 'https://via.placeholder.com/50',
-          nombre: 'Pan Bimbo',
-          cantidad: 3,
-          precio: 20.00
-        },
-        {
-          img: 'https://via.placeholder.com/50',
-          nombre: 'Jabón líquido Ace',
-          cantidad: 1,
-          precio: 35.00
-        }
-      ],
-      total: 95.00
-    },
-    {
-      id: 3,
-      fecha: new Date('2023-10-03T16:45:00'),
-      productos: [
-        {
-          img: 'https://via.placeholder.com/50',
-          nombre: 'Cerveza Tecate',
-          cantidad: 6,
-          precio: 18.00
-        },
-        {
-          img: 'https://via.placeholder.com/50',
-          nombre: 'Leche Lala',
-          cantidad: 2,
-          precio: 22.00
-        }
-      ],
-      total: 152.00
-    },
-    {
-      id: 4,
-      fecha: new Date('2023-10-04T09:00:00'),
-      productos: [
-        {
-          img: 'https://via.placeholder.com/50',
-          nombre: 'Galletas Oreo',
-          cantidad: 4,
-          precio: 10.00
-        },
-        {
-          img: 'https://via.placeholder.com/50',
-          nombre: 'Agua Bonafont 1L',
-          cantidad: 5,
-          precio: 8.00
-        }
-      ],
-      total: 80.00
-    },
-    {
-      id: 5,
-      fecha: new Date('2023-10-05T12:30:00'),
-      productos: [
-        {
-          img: 'https://via.placeholder.com/50',
-          nombre: 'Papas Sabritas',
-          cantidad: 3,
-          precio: 12.00
-        },
-        {
-          img: 'https://via.placeholder.com/50',
-          nombre: 'Jugo Jumex',
-          cantidad: 2,
-          precio: 15.00
-        }
-      ],
-      total: 66.00
+export class VentasComponent implements OnInit {
+    ventas: any[] = []; // Array para almacenar las ventas
+
+    constructor(private http: HttpClient) {}
+
+    ngOnInit() {
+        this.obtenerVentas();
     }
-  ];
+
+    // Obtener las ventas desde el backend
+    obtenerVentas() {
+        this.http.get<any[]>('http://localhost:3000/api/ventas')
+            .subscribe(
+                (data) => {
+                    console.log('Datos de ventas:', data); // Verificar la estructura de los datos
+                    this.ventas = data;
+                },
+                (error) => {
+                    console.error('Error al obtener las ventas:', error);
+                }
+            );
+    }
 }

@@ -1,6 +1,6 @@
 // Variables de colores y fuentes
 $background-color: #f5f6fa;
-$sidebar-color: #373d71;
+$sidebar-color: linear-gradient(135deg, #373d71, #2D336B);
 $button-hover-color: #2D336B;
 $primary-color: #6C63FF; // Color principal moderno
 $secondary-color: #FF6584; // Color secundario vibrante
@@ -26,7 +26,7 @@ $font-family: 'Poppins', sans-serif; // Fuente moderna
     box-sizing: border-box;
 }
 
-// Sidebar moderno
+// Sidebar moderno con degradado
 .sidebar {
     width: 250px;
     display: flex;
@@ -34,7 +34,7 @@ $font-family: 'Poppins', sans-serif; // Fuente moderna
     align-items: center;
     padding: 20px;
     gap: 15px;
-    background-color: $sidebar-color;
+    background: $sidebar-color;
     box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 0 20px 20px 0;
 
@@ -52,6 +52,7 @@ $font-family: 'Poppins', sans-serif; // Fuente moderna
         gap: 10px;
         transition: all $transition-speed ease;
         position: relative;
+        overflow: hidden;
 
         &:hover {
             background-color: rgba(255, 255, 255, 0.1);
@@ -66,7 +67,7 @@ $font-family: 'Poppins', sans-serif; // Fuente moderna
             transform: translateY(-50%);
             width: 5px;
             height: 0;
-            background-color: $primary-color;
+            background: linear-gradient(45deg, $primary-color, $secondary-color);
             border-radius: 5px;
             transition: height $transition-speed ease;
         }
@@ -95,7 +96,7 @@ $font-family: 'Poppins', sans-serif; // Fuente moderna
     padding-top: 50px;
 }
 
-// Barra de búsqueda moderna
+// Barra de búsqueda moderna con degradado
 .search-container {
     display: flex;
     align-items: center;
@@ -127,7 +128,7 @@ $font-family: 'Poppins', sans-serif; // Fuente moderna
     }
 
     .search-btn {
-        background-color: $primary-color;
+        background: linear-gradient(45deg, $primary-color, $secondary-color);
         color: $white;
         border: none;
         padding: 10px 15px;
@@ -136,7 +137,7 @@ $font-family: 'Poppins', sans-serif; // Fuente moderna
         transition: background $transition-speed ease;
 
         &:hover {
-            background-color: darken($primary-color, 10%);
+            background: linear-gradient(45deg, darken($primary-color, 10%), darken($secondary-color, 10%));
         }
     }
 }
@@ -193,7 +194,7 @@ $font-family: 'Poppins', sans-serif; // Fuente moderna
 
         .agregar-btn {
             padding: 8px;
-            background-color: $primary-color;
+            background: linear-gradient(45deg, $primary-color, $secondary-color);
             color: $white;
             border: none;
             border-radius: 8px;
@@ -201,7 +202,7 @@ $font-family: 'Poppins', sans-serif; // Fuente moderna
             transition: background-color $transition-speed ease;
 
             &:hover {
-                background-color: darken($primary-color, 10%);
+                background: linear-gradient(45deg, darken($primary-color, 10%), darken($secondary-color, 10%));
             }
         }
     }
@@ -249,7 +250,7 @@ $font-family: 'Poppins', sans-serif; // Fuente moderna
     .cobrar-btn {
         width: 100%;
         padding: 12px;
-        background-color: $primary-color;
+        background: linear-gradient(45deg, $primary-color, $secondary-color);
         color: $white;
         border: none;
         border-radius: 8px;
@@ -257,7 +258,22 @@ $font-family: 'Poppins', sans-serif; // Fuente moderna
         transition: background-color $transition-speed ease;
 
         &:hover {
-            background-color: darken($primary-color, 10%);
+            background: linear-gradient(45deg, darken($primary-color, 10%), darken($secondary-color, 10%));
+        }
+    }
+
+    // Estilos para el botón de cancelar
+    .cancelar-btn {
+        background-color: transparent;
+        border: none;
+        color: #ff4444; // Color rojo
+        font-size: 16px;
+        cursor: pointer;
+        margin-left: 10px;
+        transition: color 0.3s ease;
+
+        &:hover {
+            color: #cc0000; // Color rojo más oscuro al hacer hover
         }
     }
 }

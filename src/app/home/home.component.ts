@@ -35,42 +35,72 @@ buscarProductos() {
         );
 }
 
-  // Agregar producto a la venta
-  agregarProductoAVenta(producto: any) {
+   // Agregar producto a la venta
+   agregarProductoAVenta(producto: any) {
+    // Verificar si hay existencias disponibles
+    if (producto.existencias <= 0) {
+        alert('No hay existencias disponibles para este producto.');
+        return; // Detener la función si no hay existencias
+    }
+
     const productoEnVenta = this.ventaActual.productos.find((p: any) => p.id === producto.id);
 
     if (productoEnVenta) {
-      productoEnVenta.cantidad += 1;
-      productoEnVenta.subtotal = productoEnVenta.cantidad * producto.precio_venta;
+        // Verificar si al agregar una unidad se superan las existencias
+        if (productoEnVenta.cantidad + 1 > producto.existencias) {
+            alert('No hay suficientes existencias para este producto.');
+            return; // Detener la función si no hay suficientes existencias
+        }
+
+        productoEnVenta.cantidad += 1;
+        productoEnVenta.subtotal = productoEnVenta.cantidad * producto.precio_venta;
     } else {
-      this.ventaActual.productos.push({
-        ...producto,
-        cantidad: 1,
-        subtotal: producto.precio_venta
-      });
+        this.ventaActual.productos.push({
+            ...producto,
+            cantidad: 1,
+            subtotal: producto.precio_venta
+        });
     }
 
     this.calcularTotalVenta();
-  }
+}
 
-  // Calcular el total de la venta
-  calcularTotalVenta() {
+// Calcular el total de la venta
+calcularTotalVenta() {
     this.ventaActual.total = this.ventaActual.productos.reduce((total: number, producto: any) => {
         return total + Number(producto.subtotal); // Convierte el subtotal a número
     }, 0);
 }
 
-  // Procesar la venta
-  procesarVenta() {
-    this.http.post('http://localhost:3000/api/ventas', this.ventaActual)
-      .subscribe(
-        (response) => {
-          alert('Venta procesada con éxito');
-          this.ventaActual = { productos: [], total: 0 }; // Reiniciar la venta
-        },
-        (error) => {
-          console.error('Error al procesar la venta:', error);
-        }
-      );
-  }
+// Eliminar producto de la venta
+eliminarProductoDeVenta(index: number) {
+    this.ventaActual.productos.splice(index, 1); // Eliminar el producto del array
+    this.calcularTotalVenta(); // Recalcular el total
+}
+
+// Procesar la venta
+procesarVenta() {
+    // Preparar los datos para enviar al backend
+    const ventaData = {
+        total: this.ventaActual.total,
+        detalles: this.ventaActual.productos.map((producto: any) => ({
+            id_producto: producto.id,          // ID del producto
+            cantidad: producto.cantidad,       // Cantidad vendida
+            precio_unitario: producto.precio_venta, // Precio unitario
+            subtotal: producto.subtotal        // Subtotal (precio_unitario * cantidad)
+        }))
+    };
+
+    // Enviar la venta al backend
+    this.http.post('http://localhost:3000/api/ventas', ventaData)
+        .subscribe(
+            (response) => {
+                alert('Venta procesada con éxito');
+                this.ventaActual = { productos: [], total: 0 }; // Reiniciar la venta
+            },
+            (error) => {
+                console.error('Error al procesar la venta:', error);
+            }
+        );
+}
 }
