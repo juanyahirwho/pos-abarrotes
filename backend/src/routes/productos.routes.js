@@ -11,6 +11,7 @@ import {
     buscarProductosPorNombre
 } from '../controllers/productos.controller.js';
 import { registrarVenta, obtenerDetallesVenta, obtenerVentas } from '../controllers/ventas.controller.js'; // Importar controladores de ventas
+import { registrarProveedor, obtenerProveedores, actualizarProveedor, eliminarProveedor } from '../controllers/proveedores.controller.js';
 
 const router = express.Router();
 
@@ -28,5 +29,11 @@ router.get('/productos-inventario', obtenerProductosInvent);
 router.post('/ventas', registrarVenta);
 router.get('/ventas', obtenerVentas);
 router.get('/ventas/:id', obtenerDetallesVenta);
+
+// Rutas de proveedores
+router.post('/proveedores', registrarProveedor);
+router.get('/proveedores', obtenerProveedores);
+router.put('/proveedores/:id', actualizarProveedor);
+router.delete('/proveedores/:id', eliminarProveedor);
 
 export default router;

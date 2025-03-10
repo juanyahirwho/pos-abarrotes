@@ -1,33 +1,112 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-proveedores',
-  imports: [CommonModule, RouterModule],
+  standalone: true,
+  imports: [CommonModule, RouterModule, FormsModule, HttpClientModule],
   templateUrl: './proveedores.component.html',
   styleUrl: './proveedores.component.scss'
 })
 export class ProveedoresComponent {
-  // Datos duros para los proveedores
-  proveedores = [
-    { nombre: 'Bimbo', telefono: '2215789123456' },
-    { nombre: 'Sabritas', telefono: '2465789871423' },
-    { nombre: 'Coca Cola', telefono: '222123456789' },
-    { nombre: 'Lala', telefono: '233456789012' },
-    { nombre: 'Tecate', telefono: '244567890123' }
-  ];
+  proveedor = {
+    nombre: '',
+    telefono: ''
+  };
 
-  // Función para editar un proveedor
-  editarProveedor(proveedor: any) {
-    console.log('Editando proveedor:', proveedor);
-    // Aquí puedes implementar la lógica para editar el proveedor
+  proveedores: any[] = [];
+  proveedorEditado: any = null;
+  mostrarFormularioEdicion: boolean = false;
+  mensaje: string = '';
+
+  constructor(private http: HttpClient) {}
+
+  ngOnInit() {
+    this.obtenerProveedores();
   }
 
-  // Función para eliminar un proveedor
+  obtenerProveedores() {
+    this.http.get('http://localhost:3000/api/proveedores').subscribe(
+      (response: any) => {
+        this.proveedores = response;
+      },
+      (error) => {
+        console.error('Error al obtener los proveedores:', error);
+      }
+    );
+  }
+
+  registrarProveedor() {
+    const proveedorData = {
+      nombre: this.proveedor.nombre,
+      telefono: this.proveedor.telefono
+    };
+
+    this.http.post('http://localhost:3000/api/proveedores', proveedorData).subscribe(
+      (response: any) => {
+        this.mensaje = 'Proveedor registrado exitosamente con ID: ' + response.id;
+        this.limpiarFormulario();
+        this.obtenerProveedores();
+      },
+      (error) => {
+        this.mensaje = 'Error al registrar el proveedor: ' + error.message;
+      }
+    );
+  }
+
+  abrirFormularioEdicion(proveedor: any) {
+    this.proveedorEditado = { ...proveedor };
+    this.mostrarFormularioEdicion = true;
+  }
+
+  cerrarFormularioEdicion() {
+    this.mostrarFormularioEdicion = false;
+    this.proveedorEditado = null;
+  }
+
+  guardarCambios() {
+    const proveedorData = {
+      nombre: this.proveedorEditado.nombre,
+      telefono: this.proveedorEditado.telefono
+    };
+
+    this.http.put(`http://localhost:3000/api/proveedores/${this.proveedorEditado.id}`, proveedorData).subscribe(
+      (response: any) => {
+        this.mensaje = 'Proveedor actualizado exitosamente';
+        this.cerrarFormularioEdicion();
+        this.obtenerProveedores();
+      },
+      (error) => {
+        this.mensaje = 'Error al actualizar el proveedor: ' + error.message;
+      }
+    );
+  }
+
+  confirmarEliminacion(proveedor: any) {
+    if (confirm('¿Estás seguro de que deseas eliminar este proveedor?')) {
+      this.eliminarProveedor(proveedor);
+    }
+  }
+
   eliminarProveedor(proveedor: any) {
-    console.log('Eliminando proveedor:', proveedor);
-    // Aquí puedes implementar la lógica para eliminar el proveedor
+    this.http.delete(`http://localhost:3000/api/proveedores/${proveedor.id}`).subscribe(
+      (response: any) => {
+        this.mensaje = 'Proveedor eliminado exitosamente';
+        this.obtenerProveedores();
+      },
+      (error) => {
+        this.mensaje = 'Error al eliminar el proveedor: ' + error.message;
+      }
+    );
+  }
+
+  limpiarFormulario() {
+    this.proveedor = {
+      nombre: '',
+      telefono: ''
+    };
   }
 }

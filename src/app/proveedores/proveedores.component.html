@@ -9,19 +9,24 @@
     <!-- Formulario de registro de proveedores -->
     <div class="registro-container">
         <h3>➕ Registrar Nuevo Proveedor</h3>
-        <form class="registro-form">
+        <form class="registro-form" (ngSubmit)="registrarProveedor()" #proveedorForm="ngForm">
             <div class="form-group">
                 <label for="nombre">Nombre del proveedor:</label>
-                <input type="text" id="nombre" name="nombre" placeholder="Ej: Bimbo" required />
+                <input type="text" id="nombre" name="nombre" [(ngModel)]="proveedor.nombre" placeholder="Ej: Bimbo" required />
             </div>
             <div class="form-group">
                 <label for="telefono">Teléfono:</label>
-                <input type="text" id="telefono" name="telefono" placeholder="Ej: 2215789123456" required />
+                <input type="text" id="telefono" name="telefono" [(ngModel)]="proveedor.telefono" placeholder="Ej: 2215789123456" required />
             </div>
             <div class="form-group">
                 <button type="submit" class="guardar-btn">💾 Guardar Proveedor</button>
             </div>
         </form>
+    </div>
+
+    <!-- Mensaje de registro exitoso o error -->
+    <div *ngIf="mensaje" class="mensaje">
+        {{ mensaje }}
     </div>
 
     <!-- Lista de proveedores -->
@@ -33,9 +38,28 @@
                 <p class="telefono">{{proveedor.telefono}}</p>
             </div>
             <div class="proveedor-actions">
-                <button class="edit-btn" (click)="editarProveedor(proveedor)">✏️ Editar</button>
-                <button class="delete-btn" (click)="eliminarProveedor(proveedor)">🗑️ Eliminar</button>
+                <button class="edit-btn" (click)="abrirFormularioEdicion(proveedor)">✏️ Editar</button>
+                <button class="delete-btn" (click)="confirmarEliminacion(proveedor)">🗑️ Eliminar</button>
             </div>
         </div>
+    </div>
+
+    <!-- Formulario de edición de proveedores -->
+    <div *ngIf="mostrarFormularioEdicion" class="edicion-container">
+        <h3>✏️ Editar Proveedor</h3>
+        <form class="edicion-form" (ngSubmit)="guardarCambios()" #edicionForm="ngForm">
+            <div class="form-group">
+                <label for="nombreEditar">Nombre del proveedor:</label>
+                <input type="text" id="nombreEditar" name="nombreEditar" [(ngModel)]="proveedorEditado.nombre" placeholder="Ej: Bimbo" required />
+            </div>
+            <div class="form-group">
+                <label for="telefonoEditar">Teléfono:</label>
+                <input type="text" id="telefonoEditar" name="telefonoEditar" [(ngModel)]="proveedorEditado.telefono" placeholder="Ej: 2215789123456" required />
+            </div>
+            <div class="form-group">
+                <button type="submit" class="guardar-btn">💾 Guardar Cambios</button>
+                <button type="button" class="volver-btn" (click)="cerrarFormularioEdicion()">⬅️ Volver</button>
+            </div>
+        </form>
     </div>
 </div>

@@ -220,3 +220,127 @@ $transition-speed: 0.3s;
 .proveedor-card {
     animation: fadeIn 0.5s ease;
 }
+
+// Variables de colores
+$background-color: #f5f6fa;
+$primary-color: #373d71;
+$secondary-color: #2D336B;
+$accent-color: #7886C7;
+$hover-color: rgba(255, 255, 255, 0.1);
+$box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+$transition-speed: 0.3s;
+
+// Estilos para el formulario de edición
+.edicion-container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: $box-shadow;
+    margin-bottom: 20px;
+    transition: box-shadow $transition-speed ease;
+    animation: fadeIn 0.5s ease;
+
+    &:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    h3 {
+        margin-top: 0;
+        color: $primary-color;
+        font-size: 24px;
+        text-align: center;
+        position: relative;
+        display: inline-block;
+        width: 100%;
+
+        &::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -10px;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(45deg, $primary-color, $accent-color);
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+    }
+
+    .edicion-form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+
+            label {
+                font-size: 16px;
+                color: $primary-color;
+                font-weight: 500;
+            }
+
+            input {
+                padding: 10px;
+                font-size: 16px;
+                border: 1px solid #ccc;
+                border-radius: 8px;
+                outline: none;
+                transition: border-color $transition-speed ease, box-shadow $transition-speed ease;
+
+                &:focus {
+                    border-color: $accent-color;
+                    box-shadow: 0 0 0 2px rgba($accent-color, 0.2);
+                }
+            }
+        }
+
+        .guardar-btn, .volver-btn {
+            padding: 12px;
+            font-size: 18px;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background $transition-speed ease, transform 0.2s ease;
+
+            &:hover {
+                transform: translateY(-2px);
+            }
+
+            &:active {
+                transform: scale(0.95);
+            }
+        }
+
+        .guardar-btn {
+            background: linear-gradient(45deg, $primary-color, $accent-color);
+
+            &:hover {
+                background: linear-gradient(45deg, darken($primary-color, 10%), darken($accent-color, 10%));
+            }
+        }
+
+        .volver-btn {
+            background: linear-gradient(45deg, #6c757d, #5a6268);
+
+            &:hover {
+                background: linear-gradient(45deg, darken(#6c757d, 10%), darken(#5a6268, 10%));
+            }
+        }
+    }
+}
+
+// Animación de entrada
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
