@@ -1,31 +1,34 @@
-import pool from '../config/db.js';
+import db from '../config/db.js';
 
 // Registrar un nuevo proveedor
 export const registrarProveedor = async (nombre, telefono) => {
-    const [result] = await pool.query(
+    const result = await db.run(
         'INSERT INTO proveedores (nombre, telefono) VALUES (?, ?)',
         [nombre, telefono]
     );
-    return result.insertId; // Retorna el ID del proveedor registrado
+    return result.lastID; // Retorna el ID del proveedor registrado
 };
 
-// Mostrar los proveedores
+// Obtener todos los proveedores
 export const obtenerProveedores = async () => {
-    const [proveedores] = await pool.query('SELECT * FROM proveedores');
+    const proveedores = await db.all('SELECT * FROM proveedores');
     return proveedores;
 };
 
+// Actualizar un proveedor
 export const actualizarProveedor = async (id, nombre, telefono) => {
-    const [result] = await pool.query(
+    const result = await db.run(
         'UPDATE proveedores SET nombre = ?, telefono = ? WHERE id = ?',
         [nombre, telefono, id]
     );
-    return result.affectedRows;
+    return result.changes; // Retorna el número de filas afectadas
 };
 
+// Eliminar un proveedor
 export const eliminarProveedor = async (id) => {
-    const [result] = await pool.query('DELETE FROM proveedores WHERE id = ?', [id]);
-    return result.affectedRows;
+    const result = await db.run(
+        'DELETE FROM proveedores WHERE id = ?',
+        [id]
+    );
+    return result.changes; // Retorna el número de filas afectadas
 };
-
-

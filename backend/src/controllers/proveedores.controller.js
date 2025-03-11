@@ -7,19 +7,17 @@ import {
 
 // Registrar un nuevo proveedor
 export const registrarProveedor = async (req, res) => {
-    try{
-        const { nombre, telefono} = req.body;
+    try {
+        const { nombre, telefono } = req.body;
         const id = await registrarProveedorService(nombre, telefono);
-        res.status(201).json({ message: 'Producto registrado exitosamente' ,id });
-
-    } catch (error){
+        res.status(201).json({ message: 'Proveedor registrado exitosamente', id });
+    } catch (error) {
         console.error('Error al registrar al proveedor:', error);
         res.status(500).json({ message: 'Error al registrar al proveedor' });
     }
-
 };
 
-// Obtener los proveedores
+// Obtener todos los proveedores
 export const obtenerProveedores = async (req, res) => {
     try {
         const proveedores = await obtenerProveedoresService();
@@ -30,6 +28,7 @@ export const obtenerProveedores = async (req, res) => {
     }
 };
 
+// Actualizar un proveedor
 export const actualizarProveedor = async (req, res) => {
     try {
         const { id } = req.params;
@@ -46,6 +45,7 @@ export const actualizarProveedor = async (req, res) => {
     }
 };
 
+// Eliminar un proveedor
 export const eliminarProveedor = async (req, res) => {
     try {
         const { id } = req.params;

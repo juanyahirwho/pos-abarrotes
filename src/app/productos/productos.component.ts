@@ -19,6 +19,9 @@ export class ProductosComponent implements OnInit {
   productoEditado: any = {};
   productoIdAEliminar: number | null = null;
 
+  terminoBusqueda: string = ''; // Término de búsqueda
+  productosEncontrados: any[] = []; // Productos encontrados
+  
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
@@ -39,6 +42,24 @@ export class ProductosComponent implements OnInit {
       }
     );
   }
+
+    // Buscar productos
+buscarProductos() {
+      if (this.terminoBusqueda.trim() === '') {
+          this.productosEncontrados = [];
+          return;
+      }
+
+      this.http.get<any[]>(`http://localhost:3000/api/productos/buscar?nombre=${this.terminoBusqueda}`)
+          .subscribe(
+              (data) => {
+                  this.productosEncontrados = data;
+              },
+              (error) => {
+                  console.error('Error al buscar productos:', error);
+              }
+          );
+    }
 
   abrirModalEditar(producto: any) {
     this.productoEditado = { ...producto };

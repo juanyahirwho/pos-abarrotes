@@ -112,13 +112,14 @@ export const eliminarProducto = async (req, res) => {
     }
 };
 
+// Reabastecer un producto
 export const reabastecerProducto = async (req, res) => {
     try {
         const { id } = req.params;
         const { existencias } = req.body;
 
         const producto = await obtenerProductoPorIdService(id);
-        if(!producto){
+        if (!producto) {
             return res.status(404).json({ message: 'Producto no encontrado' });
         }
 
@@ -126,12 +127,12 @@ export const reabastecerProducto = async (req, res) => {
             return res.status(400).json({ message: 'La cantidad de existencias debe ser mayor a la actual' });
         }
 
-        const actualizado = await actualizarExistenciasService(id, existencias);  
-        if(!actualizado){
+        const actualizado = await actualizarExistenciasService(id, existencias);
+        if (!actualizado) {
             return res.status(404).json({ message: 'No se pudo actualizar' });
         }
 
-        res.status(200).json({ message: 'Producto actualizado exitosamente' }); 
+        res.status(200).json({ message: 'Producto actualizado exitosamente' });
     } catch (error) {
         console.error('Error al reabastecer el producto:', error);
         res.status(500).json({ message: 'Error al reabastecer el producto' });

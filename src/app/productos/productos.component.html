@@ -2,10 +2,27 @@
     <!-- Barra de búsqueda y acciones -->
     <div class="search-container">
         <button class="back-btn" routerLink="/">⬅️ Volver al inicio</button>
-        <input type="text" placeholder="Buscar productos..." />
-        <button class="search-btn">🔍 Buscar</button>
+        <input type="text" placeholder="Buscar productos..." [(ngModel)]="terminoBusqueda" (input)="buscarProductos()" />
+            <button class="search-btn">🔍</button>
         <button class="register-btn" routerLink="/registrar-producto">➕ Registrar</button>
     </div>
+
+    <!-- Resultados de búsqueda -->
+    <div class="resultados-busqueda" *ngIf="productosEncontrados.length > 0">
+        <div class="producto-card" *ngFor="let producto of productosEncontrados">
+            <img [src]="producto.foto ? 'http://localhost:3000/' + producto.foto : 'https://via.placeholder.com/150'" alt="Imagen del producto" class="producto-img" />
+            <div class="producto-info">
+                <h3>{{producto.nombre}}</h3>
+                <p>Precio: ${{producto.precio_venta}}</p>
+                <p>Existencias: {{producto.existencias}}</p>
+            </div>
+            <div class="producto-actions">
+                <button class="edit-btn" (click)="abrirModalEditar(producto)">✏️ Editar</button>
+                <button class="delete-btn" (click)="confirmarEliminar(producto.id)">🗑️ Eliminar</button>
+            </div>
+        </div>
+    </div>
+
 
     <!-- Lista de productos -->
     <div class="productos-list">

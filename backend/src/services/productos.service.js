@@ -1,57 +1,57 @@
-import pool from '../config/db.js';
+import db from '../config/db.js';
 
 // Registrar un nuevo producto
 export const registrarProducto = async (nombre, categoria, marca, precio_compra, precio_venta, foto, existencias) => {
-    const [result] = await pool.query(
-        'INSERT INTO productos (nombre, categoria, marca, precio_compra, precio_venta, foto, existencias) VALUES (?, ?, ?, ?, ?, ?, ?)',
-        [nombre, categoria, marca, precio_compra, precio_venta, foto, existencias]
-    );
-    return result.insertId; // Retorna el ID del producto registrado
+    const sql = `INSERT INTO productos (nombre, categoria, marca, precio_compra, precio_venta, foto, existencias) VALUES (?, ?, ?, ?, ?, ?, ?)`;
+    const result = await db.run(sql, [nombre, categoria, marca, precio_compra, precio_venta, foto, existencias]);
+    return result.lastID; // Retorna el ID del producto registrado
 };
 
 // Obtener todos los productos
 export const obtenerProductos = async () => {
-    const [rows] = await pool.query('SELECT * FROM productos');
-    return rows;
+    const sql = `SELECT * FROM productos`;
+    const productos = await db.all(sql);
+    return productos;
 };
 
 // Obtener un producto por ID
 export const obtenerProductoPorId = async (id) => {
-    const [rows] = await pool.query('SELECT * FROM productos WHERE id = ?', [id]);
-    return rows[0]; // Retorna el primer resultado (o undefined si no existe)
+    const sql = `SELECT * FROM productos WHERE id = ?`;
+    const producto = await db.get(sql, [id]);
+    return producto;
 };
 
 // Actualizar un producto
 export const actualizarProducto = async (id, nombre, categoria, marca, precio_compra, precio_venta, existencias) => {
-    const [result] = await pool.query(
-        'UPDATE productos SET nombre = ?, categoria = ?, marca = ?, precio_compra = ?, precio_venta = ?, existencias = ? WHERE id = ?',
-        [nombre, categoria, marca, precio_compra, precio_venta, existencias, id]
-    );
-    return result.affectedRows > 0; // Retorna true si se actualizó el producto
+    const sql = `UPDATE productos SET nombre = ?, categoria = ?, marca = ?, precio_compra = ?, precio_venta = ?, existencias = ? WHERE id = ?`;
+    const result = await db.run(sql, [nombre, categoria, marca, precio_compra, precio_venta, existencias, id]);
+    return result.changes; // Retorna el número de filas afectadas
 };
 
 // Eliminar un producto
 export const eliminarProducto = async (id) => {
-    const [result] = await pool.query('DELETE FROM productos WHERE id = ?', [id]);
-    return result.affectedRows > 0; // Retorna true si se eliminó el producto
+    const sql = `DELETE FROM productos WHERE id = ?`;
+    const result = await db.run(sql, [id]);
+    return result.changes; // Retorna el número de filas afectadas
+};
+
+// Obtener todos los productos para el inventario
+export const obtenerProductosInvent = async () => {
+    const sql = `SELECT * FROM productos`;
+    const productos = await db.all(sql);
+    return productos;
 };
 
 // Actualizar existencias de un producto
 export const actualizarExistencias = async (id, existencias) => {
-    const [result] = await pool.query(
-        'UPDATE productos SET existencias = ? WHERE id = ?',
-        [existencias, id]
-    );
-    return result.affectedRows > 0; // Retorna true si se actualizó el producto
-};
-
-export const obtenerProductosInvent = async () => {
-    const [rows] = await pool.query('SELECT * FROM productos');
-    return rows;
+    const sql = `UPDATE productos SET existencias = ? WHERE id = ?`;
+    const result = await db.run(sql, [existencias, id]);
+    return result.changes; // Retorna el número de filas afectadas
 };
 
 // Buscar productos por nombre
 export const buscarProductosPorNombre = async (nombre) => {
-    const [rows] = await pool.query('SELECT * FROM productos WHERE nombre LIKE ?', [`%${nombre}%`]);
-    return rows; // Devuelve un arreglo vacío si no hay coincidencias
+    const sql = `SELECT * FROM productos WHERE nombre LIKE ?`;
+    const productos = await db.all(sql, [`%${nombre}%`]);
+    return productos;
 };

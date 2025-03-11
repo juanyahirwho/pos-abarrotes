@@ -18,7 +18,7 @@ export class HomeComponent {
   constructor(private http: HttpClient) {}
 
   // Buscar productos
-buscarProductos() {
+    buscarProductos() {
     if (this.terminoBusqueda.trim() === '') {
         this.productosEncontrados = [];
         return;

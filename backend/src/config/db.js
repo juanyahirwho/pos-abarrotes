@@ -1,13 +1,10 @@
-import mysql from 'mysql2/promise';
+import sqlite3 from 'sqlite3';
+import { open } from 'sqlite';
 
-const pool = mysql.createPool({
-    host: 'localhost',
-    user: 'root', 
-    password: '',
-    database: 'pos_abarrotes',
-    waitForConnections: true,
-    connectionLimit: 10,
-    queueLimit: 0
+// Abrir la conexión a la base de datos SQLite
+const db = await open({
+    filename: './src/config/database.sqlite', // Ruta a tu archivo de base de datos SQLite
+    driver: sqlite3.Database
 });
 
-export default pool;
+export default db;

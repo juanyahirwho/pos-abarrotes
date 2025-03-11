@@ -4,10 +4,21 @@
     <!-- Barra de búsqueda -->
     <div class="search-container">
         <button class="back-btn" routerLink="/">⬅️ Volver al inicio</button>
-        <input type="text" placeholder="Buscar productos..." />
+        <input type="text" placeholder="Buscar productos para iniciar la venta" [(ngModel)]="terminoBusqueda" (input)="buscarProductos()" />
         <button class="search-btn">🔍</button>
     </div>
-
+    <!-- Resultados de búsqueda -->
+    <div class="resultados-busqueda" *ngIf="productosEncontrados.length > 0">
+        <div class="producto-card" *ngFor="let producto of productosEncontrados">
+            <img [src]="producto.foto ? 'http://localhost:3000/' + producto.foto : 'https://via.placeholder.com/150'" alt="Imagen del producto" class="producto-img" />
+            <div class="producto-info">
+                <h3>{{producto.nombre}}</h3>
+                <p>Precio: ${{producto.precio_venta}}</p>
+                <p>Existencias: {{producto.existencias}}</p>
+            </div>
+        </div>
+    </div>
+    
     <!-- Tabla de productos -->
     <div class="table-container">
         <table class="productos-table">
